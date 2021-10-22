@@ -3,7 +3,7 @@ from loader import bot, dp
 from aiogram.types import Message, CallbackQuery, ReplyKeyboardRemove, message
 from aiogram.dispatcher.filters import Command
 # from keyboards.default.default_keyboard import phone
-from keyboards.inline.inline_keyboard import initial_choice, yes_no
+from keyboards.inline.inline_keyboard import initial_choice, categories
 from aiogram.dispatcher import FSMContext
 from states.text_states import Journalist, Speaker
 import re
@@ -31,9 +31,9 @@ async def ask_speaker_questions(call: CallbackQuery):
         call (CallbackQuery): [description]
     """    
     await bot.answer_callback_query(callback_query_id=call.id)
-    await call.message.edit_reply_markup(reply_markup=None)
+    await call.message.edit_reply_markup(reply_markup=categories)
     await call.message.answer('Отлично! Введите, пожалуйста, ваше ФИО:')
-    await Speaker.name.set()
+    #await Speaker.name.set()
 
 @dp.message_handler(state=Speaker.name)
 async def ask_for_name(message: Message, state = FSMContext):
